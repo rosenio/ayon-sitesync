@@ -22,8 +22,8 @@ class GeneralSubmodel(BaseSettingsModel):
     loop_delay: int = Field(60, title="Loop Delay")
     always_accessible_on: list[str] = Field([],
                                             title="Always accessible on sites")
-    active_site: str = Field("studio", title="User Default Active Site")
-    remote_site: str = Field("studio", title="User Default Remote Site")
+    active_site: str = Field("local", title="User Default Active Site")
+    remote_site: str = Field("gdrive", title="User Default Remote Site")
 
 
 class RootSubmodel(BaseSettingsModel):
@@ -42,7 +42,7 @@ class RootSubmodel(BaseSettingsModel):
     )
 
     path: str = Field(
-        "c:/projects_local",
+        "Y:/projects",
         title="Path",
         scope=["site"],
     )
@@ -51,7 +51,7 @@ class RootSubmodel(BaseSettingsModel):
 default_roots = [
     RootSubmodel(
         name="work",
-        path="C:/projects_local",
+        path="Y:/projects",
     )
 ]
 

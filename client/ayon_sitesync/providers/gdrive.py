@@ -609,6 +609,8 @@ class GDriveHandler(AbstractProvider):
         """
         roots = {}
         config_roots = self.get_roots_config()["root"]
+        self.gdrive_acc_t = self.presets.get('account_type')
+
         try:
             for path in config_roots.values():
                 if self.MY_DRIVE_STR in path:
@@ -620,11 +622,16 @@ class GDriveHandler(AbstractProvider):
                     page_token = None
 
                     while True:
-                        response = self.service.drives().list(
-                            pageSize=100,
-                            pageToken=page_token).execute()
-                        shared_drives.extend(response.get("drives", []))
-                        page_token = response.get("nextPageToken", None)
+                        if self.gdrive_acc_t == '1':
+                            response = self.service.drives().list(
+                                pageSize=100,
+                                pageToken=page_token).execute()
+                            shared_drives.extend(response.get("drives", []))
+                            page_token = response.get("nextPageToken", None)
+                        elif self.gdrive_acc_t == '2':
+                            shared_drives = self.list_folders()
+                            page_token    = None
+
                         if page_token is None:
                             break
 
