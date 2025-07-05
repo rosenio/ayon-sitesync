@@ -75,7 +75,7 @@ class IntegrateSiteSync(pyblish.api.InstancePlugin):
             version_ids = [hero_version_entity["id"]]
         )
 
-        hero_repre_ids = [repre["id"] for repre in hero_repres]
+        hero_repre_ids      = [repre["id"] for repre in hero_repres]
         publish_site_status = {site["name"]: site["status"] for site in sites}
         
         active_site = sitesync_addon.get_active_site(project_name)
