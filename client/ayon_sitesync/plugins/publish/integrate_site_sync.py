@@ -78,27 +78,13 @@ class IntegrateSiteSync(pyblish.api.InstancePlugin):
         hero_repre_ids      = [repre["id"] for repre in hero_repres]
         publish_site_status = {site["name"]: site["status"] for site in sites}
         
-        active_site = sitesync_addon.get_active_site(project_name)
-        remote_site = sitesync_addon.get_remote_site(project_name)
-        sync_states = (
-            sitesync_addon.get_representations_sync_state(
-                project_name,
-                hero_repre_ids,
-                active_site,
-                remote_site,
-            )
-        )
-        
         for hero_repre_id in hero_repre_ids:
-            state_values = sync_states.get(hero_repre_id)
-            state_data   = {active_site:state_values[0], remote_site:state_values[1]}
-            
+
             for site_name, site_status in publish_site_status.items():
-                if not state_data.get(site_name) and (site_status == SiteSyncStatus.OK):
-                    sitesync_addon.add_site(
-                        project_name,
-                        hero_repre_id,
-                        site_name,
-                        status=site_status,
-                        force=True
-                    )
+                sitesync_addon.add_site(
+                    project_name,
+                    hero_repre_id,
+                    site_name,
+                    status=site_status,
+                    force=True
+                )
